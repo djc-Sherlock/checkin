@@ -649,7 +649,7 @@ function zoo_getHomeData(inviteId= "",timeout = 0) {
             //await zoo_pk_assistGroup()
             if (data.data.result.homeMainInfo.raiseInfo.buttonStatus === 1 ) await zoo_raise(1000)
             await zoo_getHomeData('ZXTKT0225KkcRR4e_VXVIkjxlKMJdAFjRWn6-7zx55awQ');
-            //await zoo_getTaskDetail("","app")
+            await zoo_getTaskDetail("","app")
             await zoo_getTaskDetail()
           } else {
             return
