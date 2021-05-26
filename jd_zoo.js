@@ -1,6 +1,6 @@
 /*
 动物联萌 618活动
-更新时间：2021-05-25 09:23
+更新时间：2021-05-26 08:23
 做任务，收金币
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -15,9 +15,8 @@ cron "5 * * * *" script-path=https://raw.githubusercontent.com/yangtingxiao/Quan
 */
 const $ = new Env('动物联萌');
 //Node.js用户请在jdCookie.js处填写京东ck;
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '',secretp = '',shareCodeList = [];
+let cookiesArr = [], cookie = '',secretp = '',shareCodeList = [],showCode = true;
 const JD_API_HOST = `https://api.m.jd.com/client.action?functionId=`;
 !(async () => {
   await requireConfig()
@@ -207,6 +206,42 @@ function zoo_myMap(timeout = 0){
             console.log('\n开始小镇任务：'+ data.data.result.shopList[i].name)// + '-' + data.data.result.shopList[i].shopId
             await zoo_getTaskDetail(data.data.result.shopList[i].shopId)
             //}
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve()
+        }
+      })
+    },timeout)
+  })
+}
+//发技能
+function zoo_pk_doPkSkill(skillType, timeout = 0){
+  return new Promise((resolve) => {
+    setTimeout( ()=>{
+      let url = {
+        url : `${JD_API_HOST}zoo_pk_doPkSkill`,
+        headers : {
+          'Origin' : `https://wbbny.m.jd.com`,
+          'Cookie' : cookie,
+          'Connection' : `keep-alive`,
+          'Accept' : `application/json, text/plain, */*`,
+          'Host' : `api.m.jd.com`,
+          'User-Agent' : `jdapp;iPhone;9.2.0;14.1;`,
+          'Accept-Encoding' : `gzip, deflate, br`,
+          'Accept-Language' : `zh-cn`
+        },
+        body : `functionId=zoo_pk_doPkSkill&body={"skillType" : "${skillType}"}&client=wh5&clientVersion=1.0.0`
+      }
+      $.post(url, async (err, resp, data) => {
+        try {
+          //console.log('zoo_pk_doPkSkill:' + data)
+          data = JSON.parse(data);
+          if (data.data.bizCode === 0) {
+            console.log('技能获得：' + data.data.result.skillValue);
+          } else {
+            console.log('技能释放失败：' + data.data.bizMsg);
           }
         } catch (e) {
           $.logErr(e, resp);
@@ -643,6 +678,7 @@ function zoo_getHomeData(inviteId= "",timeout = 0) {
             //console.log('zoo_getHomeData:' + JSON.stringify(data))
             secretp = data.data.result.homeMainInfo.secretp
             await zoo_collectProduceScore();
+            //await zoo_pk_doPkSkill("2");
             await zoo_pk_getHomeData(
 				'sSKNX-MpqKOJsNu9mZzRBW9qcpkJmhNSMLjuFOYhrFgbIj96qtFKGFmP8qeBiq0'
 			);
@@ -825,8 +861,29 @@ function zoo_pk_getHomeData(body = "",timeout = 0) {
             }
             //await zoo_pk_assistGroup(body);
           } else {
-          data = JSON.parse(data);
-          console.log('您的商圈助力码：' + data.data.result.groupInfo.groupAssistInviteId)
+            //console.log(data);
+            data = JSON.parse(data);
+            if (showCode) {
+              console.log('您的队伍助力码：' + data.data.result.groupInfo.groupAssistInviteId);
+              showCode = false;
+            }
+            //if (data.data.result.groupPkInfo.aheadFinish) return ;
+            if (typeof data.data.result.groupPkInfo.dayTotalValue !== "undefined") {
+              if (data.data.result.groupPkInfo.dayTotalValue === data.data.result.groupPkInfo.dayTargetSell) return;
+            }
+            else
+            if (typeof data.data.result.groupPkInfo.nightTotalValue !== "undefined") {
+              if (data.data.result.groupPkInfo.nightTotalValue === data.data.result.groupPkInfo.nightTargetSell) return;
+            }
+            else
+              return;
+            for (let i in data.data.result.groupInfo.skillList) {
+              if (data.data.result.groupInfo.skillList[i].num > 0) {
+                await zoo_pk_doPkSkill(data.data.result.groupInfo.skillList[i].code);
+                await zoo_pk_getHomeData();
+                break;
+              }
+            }
           }
         } catch (e) {
           $.logErr(e, resp);
@@ -1003,6 +1060,7 @@ function initial() {
     merge[i].notify = "";
     merge[i].show = true;
   }
+  showCode = true;
 }
 //通知
 function msgShow() {
