@@ -680,7 +680,7 @@ function zoo_getHomeData(inviteId= "",timeout = 0) {
             await zoo_collectProduceScore();
             //await zoo_pk_doPkSkill("2");
             await zoo_pk_getHomeData(
-				'sSKNX-MpqKOJsNu9mZzRBW9qcpkJmhNSMLjuFOYhrFgbIj96qtFKGFmP8qeBiq0'
+				'sSKNX-MpqKOJsNu9mZzRBW9qcpkJmhNSMLjuFOYhrFgbIj96qtFKGFmP8qeBiq4'
 			);
             //await zoo_pk_assistGroup()
             if (data.data.result.homeMainInfo.raiseInfo.buttonStatus === 1 ) await zoo_raise(1000)
