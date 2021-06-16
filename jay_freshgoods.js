@@ -77,7 +77,9 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 			}
 			await list1();
 			await info();
+			await sleep(3000);
 			await helpme();
+			await sleep(3000);
 			//await helpme1()
 			await dslq();
 		}
