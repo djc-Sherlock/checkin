@@ -140,7 +140,7 @@ function helpme() {
 		let options = {
 			url: `https://api.m.jd.com/client.action`,
 
-			body: `functionId=help_activity&body={"shareCode":"${shareCode}","name":"","imageUrl":""}&client=wh5&clientVersion=1.0.0&osVersion=10&uuid=7049442d7e415232`,
+			body: `functionId=help_activity&body={"shareCode":"9B848928F2D4B69ED7635E3EE47D13E9AD1DAAB9A3E3F6CBAFDE81EEB7393333","name":"","imageUrl":""}&client=wh5&clientVersion=1.0.0&osVersion=10&uuid=7049442d7e415232`,
 			headers: {
 				Origin: 'https://h5.m.jd.com',
 				Host: 'api.m.jd.com',
