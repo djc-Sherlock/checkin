@@ -22,7 +22,7 @@ body {
 		vertical-align: baseline;
 	}
 	
-button {
+/* button {
   color: #444444;
   background: #f3f3f3;
   border: 1px #dadada solid;
@@ -30,7 +30,7 @@ button {
   font-weight: bold;
   font-size: 32pt;
   outline: none;
-}
+} */
  
 
 	h2 {
@@ -667,7 +667,6 @@ body > .ember-view {
 		display: inline-block;
 		font-size: 0.8em;
 		font-weight: 600;
-		height: 3em;
 		letter-spacing: 0.225em;
 		line-height: 3em;
 	
@@ -778,7 +777,7 @@ body > .ember-view {
 			input[type="button"],
 			button,
 			.button {
-				height: 3.75em;
+/* 				height: 3.75em; */
 				line-height: 3.75em;
 			}
 
