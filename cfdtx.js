@@ -87,82 +87,40 @@ async function cfd() {
       let nowtime = new Date().Format("s.S")
       let starttime = $.isNode() ? (process.env.CFD_STARTTIME ? process.env.CFD_STARTTIME * 1 : 60) : ($.getdata('CFD_STARTTIME') ? $.getdata('CFD_STARTTIME') * 1 : 60);
       if(nowtime < 59) {
-        let sleeptime = (starttime - nowtime) * 1000;
+        let sleeptime = (starttime - nowtime) * 1000-100;
         console.log(`等待时间 ${sleeptime / 1000}\n`);
         await sleep(sleeptime)
       }
     }
 
-    if ($.num % 2 !== 0) {
-      console.log(`等待`)
-      await $.wait(2000)
-    }
-
-    const beginInfo = await getUserInfo()
-    if (beginInfo.Fund.ddwFundTargTm === 0) {
-      console.log(`还未开通活动，请先开通\n`)
-      return
-    }
-
-    console.log(`获取提现资格`)
-    await cashOutQuali()
-
+   for(i=0;i<8;i++){
+        console.log(`查询库存时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
+           await userCashOutState()
+   }
     await showMsg()
   } catch (e) {
     $.logErr(e)
   }
 }
 
-// 提现
-async function cashOutQuali() {
-  return new Promise(async (resolve) => {
-    $.get(taskUrl(`user/CashOutQuali`, `strPgUUNum=${token['farm_jstoken']}&strPgtimestamp=${token['timestamp']}&strPhoneID=${token['phoneid']}`), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} CashOutQuali API请求失败，请检查网路重试`)
-        } else {
-          data = JSON.parse(data)
-          if (data.iRet === 0 || data.iRet === 2034) {
-            console.log(data.iRet === 0 ? `获取提现资格成功\n` : `获取提现资格失败：${data.sErrMsg}\n`)
-            console.log(`提现\n提现金额：按库存轮询提现，0点场提1元以上，12点场提0.5元以上，12点后不做限制\n`)
-            await userCashOutState()
-          } else {
-            console.log(`获取提现资格失败：${data.sErrMsg}\n`)
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
 async function userCashOutState(type = true) {
   return new Promise(async (resolve) => {
-    $.get(taskUrl(`user/UserCashOutState`), async (err, resp, data) => {
+    $.get(taskUrl(`user/ExchangeState`,`_cfd_t=${Date.now()}&ptag=7155.9.47&dwType=2&_stk=_cfd_t%2CbizCode%2CdwEnv%2CdwType%2Cptag%2Csource%2CstrZone&_ste=1&h5st=20211029171536152%3B4517888563531163%3B10032%3Btk01w81b31b5030nX95x0AAvMQ%2Bb9iQsu2df3WEhARwskFDNkVyKXbYwYUpJXNCDSu73Cd501N67D0gfusR06Tsev3vn%3B21d8dd5cd526a5dd3dfe261402e51b002884ffa53303b85d17eca23187dc3d6a&_=1635498936153&sceneval=2&g_login_type=1&g_ty=ls`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} UserCashOutState API请求失败，请检查网路重试`)
+          console.log(`${$.name} ExchangeState API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
-          if (type) {
-            if (data.dwTodayIsCashOut !== 1) {
-              if (data.ddwUsrTodayGetRich >= data.ddwTodayTargetUnLockRich) {
-                nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000)
-                if (nowTimes.getHours() >= 0 && nowTimes.getHours() < 12) {
-                  data.UsrCurrCashList = data.UsrCurrCashList.filter((x) => x.ddwMoney / 100 >= 1)
-                } else if (nowTimes.getHours() === 12 && nowTimes.getMinutes() <= 5) {
-                  data.UsrCurrCashList = data.UsrCurrCashList.filter((x) => x.ddwMoney / 100 >= 0.5)
-                }
-                for (let key of Object.keys(data.UsrCurrCashList).reverse()) {
-                  let vo = data.UsrCurrCashList[key]
-                  if (vo.dwRemain > 0) {
-                    let cashOutRes = await cashOut(vo.ddwMoney, vo.ddwPaperMoney)
+                  data.hongbao = data.hongbao.filter((x) => x.ddwPrice / 100 ==100)
+                for (let key of Object.keys(data.hongbao)) {
+                  let vo = data.hongbao[key]
+                  if (vo.dwStockNum > 0) {
+                      console.log(`100元库存：${vo.dwStockNum}`); 
+                    let cashOutRes = await cashOut()
+                    console.log(`兑换结束时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);  
                     if (cashOutRes.iRet === 0) {
-                      $.money = vo.ddwMoney / 100
+                      $.money = vo.ddwPrice / 100
                       console.log(`提现成功：获得${$.money}元`)
                       break
                     } else {
@@ -170,22 +128,9 @@ async function userCashOutState(type = true) {
                       await userCashOutState()
                     }
                   } else {
-                    console.log(`提现失败：${vo.ddwMoney / 100}元库存不足`)
+                    console.log(`提现失败：${vo.ddwPrice / 100}元库存不足`)
                   }
                 }
-              } else {
-                console.log(`不满足提现条件开始升级建筑`)
-                }
-                if (buildLvlUpRes.iRet === 0) {
-                  await userCashOutState()
-                } else {
-                  console.log(`今日还未赚够${data.ddwTodayTargetUnLockRich}财富，无法提现`)
-                }
-              }
-            } else {
-              console.log(`提现失败：今天已经提现过了~`)
-            }
-          }
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -195,9 +140,10 @@ async function userCashOutState(type = true) {
     })
   })
 }
-function cashOut(ddwMoney, ddwPaperMoney) {
+function cashOut() {
   return new Promise((resolve) => {
-    $.get(taskUrl(`user/CashOut`, `ddwMoney=${ddwMoney}&ddwPaperMoney=${ddwPaperMoney}&strPgUUNum=${token['farm_jstoken']}&strPgtimestamp=${token['timestamp']}&strPhoneID=${token['phoneid']}`), (err, resp, data) => {
+      console.log(`兑换开始时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);  
+    $.get(taskUrl(`user/ExchangePrize`,`dwType=3&dwLvl=3&ddwPaperMoney=100000&strPoolName=jxcfd2_exchange_hb_202110&strPhoneID=${token['phoneid']}&strPgUUNum=${token['farm_jstoken']}`), (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
