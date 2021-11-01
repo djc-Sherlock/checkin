@@ -2977,10 +2977,9 @@ $.notifyTime = $.getdata('cfd_notifyTime');
 $.result = [];
 $.shareCodes = [];
 let cookiesArr = [
-  'pt_key=app_openAAJhf2nnADDzwCC7M5Hy3ViBNSCRRalqVI4X7nsrJ6LvFi0Wk27atFa7My4WQkD0hITwZI-Y6s0;pt_pin=jd_6cf0de9a7c18e;'
+  
 ],
-  cookie =
-    'pt_key=app_openAAJhf2nnADDzwCC7M5Hy3ViBNSCRRalqVI4X7nsrJ6LvFi0Wk27atFa7My4WQkD0hITwZI-Y6s0;pt_pin=jd_6cf0de9a7c18e;',
+  cookie ='',
   token,
   nowTimes,
   UA;
