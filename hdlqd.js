@@ -8,9 +8,11 @@ const $ = new Env('海底捞小程序签到');
 const notify = $.isNode() ? require('./sendNotify') : ''; // 这里是 node（青龙属于node环境）通知相关的
 const Notify = 1; //0为关闭通知，1为打开通知,默认为1
 const debug = 0; //0为关闭调试，1为打开调试,默认为0
+const { default: axios } = require('axios');
+const barkAxios = axios.create();
 //////////////////////
 var request = require('request');
-let hdlck = process.env.hdlck || 'o4YwF5FW3D6EQKQmwudUkHlI0Gzo&oF_Z5jl_mcZATvRQwbIbbonBXiZE'; // 这里是 从青龙的 配置文件 读取你写的变量
+let hdlck = process.env.hdlck || ''; // 这里是 从青龙的 配置文件 读取你写的变量
 let hdlckArr = [];
 let data = '';
 let APP_TOKEN = '';
@@ -108,6 +110,12 @@ function login(timeout = 3 * 1000) {
 						console.log(`【token获取成功】${result.data.token} 🎉 `);
 					} else {
 						console.log(`\n【token】获取失败!\n `);
+						barkAxios({
+							method: 'get',
+							url: `http://www.pushplus.plus/send?token=de6b64b855544e01b496e9f7c67a0562&content=${encodeURIComponent(
+								`海底捞签到获取token失败,可能是网络被外星人抓走了`
+							)}`
+						});
 					}
 				} catch (e) {
 					console.log(e);
@@ -161,8 +169,18 @@ function getInfo(timeout = 3 * 1000) {
 					} else if (result.success == false) {
 						console.log(`获取账号信息失败，原因是：${result.msg}`);
 						msg += `\n获取账号信息失败，原因是：${result.msg}`;
+						barkAxios({
+							method: 'get',
+							url: `http://www.pushplus.plus/send?token=de6b64b855544e01b496e9f7c67a0562&content=${encodeURIComponent(`海底捞签到获取账号信息失败`)}`
+						});
 					} else {
 						console.log(`\n【获取账号信息】 失败 ❌ 了呢,可能是网络被外星人抓走了!\n `);
+						barkAxios({
+							method: 'get',
+							url: `http://www.pushplus.plus/send?token=de6b64b855544e01b496e9f7c67a0562&content=${encodeURIComponent(
+								`海底捞签到获取账号信息失败,可能是网络被外星人抓走了`
+							)}`
+						});
 						msg += `\n【获取账号信息】 失败 ❌ 了呢,可能是网络被外星人抓走了!\n `;
 					}
 				} catch (e) {
@@ -215,14 +233,18 @@ function signin(timeout = 3 * 1000) {
 					if (result.success == true) {
 						// 这里是根据服务器返回的数据做判断  方便我们知道任务是否完成了
 
-						console.log(`【签到】账号${mobile}签到成功，获得：${result.signinQueryDetailList[0].fragment}积分 🎉`);
-						msg += `\n【签到】账号${mobile}签到成功，获得：${result.signinQueryDetailList[0].fragment}积分🎉`;
+						console.log(`账号${mobile}签到成功，获得：${result.signinQueryDetailList[0].fragment}积分 🎉`);
+						msg += `\n账号${mobile}签到成功，获得：${result.signinQueryDetailList[0].fragment}积分🎉`;
 					} else if (result.success == false) {
-						console.log(`\n账号${mobile}【签到】 失败,原因是：${result.msg}!\n `);
-						msg += `\n账号${mobile}【签到】 失败,原因是：${result.msg}!\n `;
+						console.log(`\n账号${mobile}签到失败,原因是：${result.msg}!\n `);
+						msg += `\n账号${mobile}签到失败,原因是：${result.msg}!\n `;
 					} else {
-						console.log(`\n账号${mobile}【签到】 失败 ❌ 了呢,可能是网络被外星人抓走了!\n `);
-						msg += `\n【账号${mobile}【签到】 失败 ❌ 了呢,可能是网络被外星人抓走了!\n `;
+						console.log(`\n账号${mobile}签到失败 ❌ 了呢,可能是网络被外星人抓走了!\n `);
+						barkAxios({
+							method: 'get',
+							url: `http://www.pushplus.plus/send?token=de6b64b855544e01b496e9f7c67a0562&content=${encodeURIComponent(`海底捞签到失败,可能是网络被外星人抓走了`)}`
+						});
+						msg += `\n【账号${mobile}签到失败 ❌ 了呢,可能是网络被外星人抓走了!\n `;
 					}
 				} catch (e) {
 					console.log(e);
@@ -273,8 +295,8 @@ function getFragment(timeout = 3 * 1000) {
 
 					let result = JSON.parse(data);
 					if (result.success == true) {
-						console.log(`账号[${mobile}]碎片为：${result.data.total}，最近一次过期时间为：${result.data.expireDate}`);
-						msg += `\n账号[${mobile}]碎片为：${result.data.total}，最近一次过期时间为：${result.data.expireDate}`;
+						console.log(`账号${mobile}碎片为：${result.data.total}，最近一次过期时间为：${result.data.expireDate}`);
+						msg += `\n账号${mobile}碎片为：${result.data.total}，最近一次过期时间为：${result.data.expireDate}`;
 					} else {
 						console.log(`账号[${mobile}]查询碎片失败,原因是：${result.msg}`);
 						msg += `\n账号[${mobile}]查询碎片失败,原因是：${result.msg}`;
