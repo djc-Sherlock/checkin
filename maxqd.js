@@ -4,8 +4,7 @@ MAX+签到
 ========= 青龙 =========
 变量格式：export maxck=' xxxx & xxx @  xxxx & xxx '  多个账号用 @分割
 */
-const jsname = 'MAX+签到';
-const $ = Env(jsname);
+const $ = new Env('MAX+签到');
 const notify = $.isNode() ? require('./sendNotify') : ''; // 这里是 node（青龙属于node环境）通知相关的
 const Notify = 1; //0为关闭通知，1为打开通知,默认为1
 const debug = 0; //0为关闭调试，1为打开调试,默认为0
