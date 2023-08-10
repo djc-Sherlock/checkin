@@ -220,8 +220,8 @@ function signin(timeout = 3 * 1000) {
 					if (result.success == true) {
 						// 这里是根据服务器返回的数据做判断  方便我们知道任务是否完成了
 
-						console.log(`账号${mobile}签到成功，获得：${result.signinQueryDetailList[0].fragment}积分 🎉`);
-						msg += `\n账号${mobile}签到成功，获得：${result.signinQueryDetailList[0].fragment}积分🎉`;
+						console.log(`账号${mobile}签到成功🎉`);
+						msg += `\n账号${mobile}签到成功🎉`;
 					} else if (result.success == false) {
 						console.log(`\n账号${mobile}签到失败,原因是：${result.msg}!\n `);
 						msg += `\n账号${mobile}签到失败,原因是：${result.msg}!\n `
