@@ -226,8 +226,7 @@ function signin(timeout = 3 * 1000) {
 						msg += `\n账号${mobile}签到成功，获得：${result.signinQueryDetailList[0].fragment}积分🎉`;
 					} else if (result.success == false) {
 						console.log(`\n账号${mobile}签到失败,原因是：${result.msg}!\n `);
-						msg += `\n账号${mobile}签到失败,原因是：${result.msg}!\n `;
-						errorMsg(msg);
+						msg += `\n账号${mobile}签到失败,原因是：${result.msg}!\n `
 					} else {
 						console.log(`\n账号${mobile}签到失败 ❌ 了呢,可能是网络被外星人抓走了!\n `);
 						msg += `\n【账号${mobile}签到失败 ❌ 了呢,可能是网络被外星人抓走了!\n `;
