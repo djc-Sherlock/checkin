@@ -2866,7 +2866,7 @@ var message = '', node='', channel, adiu='', userId='', actID='', playID='',Cook
     await checkIn();
     await signIn();
 
-    await notify();
+    await SendMsg(message);
 })()
 .catch((e) => {
     $.log("", `❌失败! 原因: ${e}!`, "");
@@ -3055,7 +3055,20 @@ function signIn() {
         })
     })
 }
+async function SendMsg(message) {
+	if (!message) return;
 
+	if (Notify > 0) {
+		if ($.isNode()) {
+			var notify = require('./sendNotify');
+			await notify.sendNotify($.name, message);
+		} else {
+			$.msg(message);
+		}
+	} else {
+		console.log(message);
+	}
+}
 //************ENV
 function Env(t, e) {
 	class s {
