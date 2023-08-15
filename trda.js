@@ -10,9 +10,7 @@ let Notify = 1; //通知开关，0为关,大于0为开
 let envSplitor = ['\n', '@'];
 let _0x3aab95, _0xe0042e, _0x13dde9, _0x2b5b90;
 
-let _0xd8715b = _0xea270c(),
-	_0xf38a09 = ($.isNode() ? process.env.cgkeyID : $.getdata('cgkeyID')) || '',
-	_0x5c68a5 = ($.isNode() ? process.env.tmuyun : $.getdata('tmuyun')) || '',
+let _0x5c68a5 = ($.isNode() ? process.env.tmuyun : $.getdata('tmuyun')) || '',
 	_0x5844c0 = [];
 
 let _0xc70144 = 0,
