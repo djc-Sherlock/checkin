@@ -2823,8 +2823,14 @@ function RSA_Public_Encrypt(t) {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 const $ = new Env('高德地图签到');
+const notify = $.isNode() ? require('./sendNotify') : ''; // 这里是 node（青龙属于node环境）通知相关的
+const Notify = 1; //0为关闭通知，1为打开通知,默认为1
 const _key = 'GD_Val';
-const gdVal = $.getdata(_key);
+const gdVal =
+	process.env.GD_Val ||
+	$.getdata(_key) ||
+	'';
+var md5 = require('md5');
 var message = '',
 	node = '',
 	channel,
@@ -2832,11 +2838,10 @@ var message = '',
 	userId = '',
 	actID = '',
 	playID = '',
-	adcode = '',
-	bizVersion = '';
-var Cookie = process.env.gdck || ''; // 这里是 从青龙的 配置文件 读取你写的变量
-var sessionid = process.env.gdsessionid || '';
-//console.log(gdVal)
+	Cookie = '',
+	sessionid = '';
+(adcode = ''), (bizVersion = '');
+
 !(async () => {
 	if (typeof $request != 'undefined') {
 		getToken();
@@ -2865,7 +2870,7 @@ var sessionid = process.env.gdsessionid || '';
 	await checkIn();
 	await signIn();
 
-	await notify();
+	await SendMsg(message);
 })()
 	.catch(e => {
 		$.log('', `❌失败! 原因: ${e}!`, '');
@@ -3053,8 +3058,19 @@ function signIn() {
 	});
 }
 
-async function notify() {
-	$.msg($.name, '', message);
+async function SendMsg(message) {
+	if (!message) return;
+
+	if (Notify > 0) {
+		if ($.isNode()) {
+			var notify = require('./sendNotify');
+			await notify.sendNotify($.name, message);
+		} else {
+			$.msg(message);
+		}
+	} else {
+		console.log(message);
+	}
 }
 
 //************ENV
@@ -3313,7 +3329,6 @@ function Env(t, e) {
 						);
 					break;
 				case 'Node.js':
-					let s = require('iconv-lite');
 					this.initGotEnv(t),
 						this.got(t)
 							.on('redirect', (t, e) => {
@@ -3329,12 +3344,12 @@ function Env(t, e) {
 							.then(
 								t => {
 									const { statusCode: a, statusCode: r, headers: i, rawBody: o } = t,
-										n = s.decode(o, this.encoding);
+										n = s.decode(o, thia.decodes.encoding);
 									e(null, { status: a, statusCode: r, headers: i, rawBody: o, body: n }, n);
 								},
 								t => {
 									const { message: a, response: r } = t;
-									e(a, r, r && s.decode(r.rawBody, this.encoding));
+									e(a, r, r && r.rawBody);
 								}
 							);
 			}
@@ -3368,18 +3383,17 @@ function Env(t, e) {
 						);
 					break;
 				case 'Node.js':
-					let a = require('iconv-lite');
 					this.initGotEnv(t);
 					const { url: r, ...i } = t;
 					this.got[s](r, i).then(
 						t => {
 							const { statusCode: s, statusCode: r, headers: i, rawBody: o } = t,
-								n = a.decode(o, this.encoding);
+								n = o;
 							e(null, { status: s, statusCode: r, headers: i, rawBody: o, body: n }, n);
 						},
 						t => {
 							const { message: s, response: r } = t;
-							e(s, r, r && a.decode(r.rawBody, this.encoding));
+							e(s, r, r && r.rawBody);
 						}
 					);
 			}
