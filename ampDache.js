@@ -2826,242 +2826,234 @@ const $ = new Env('高德地图签到');
 const notify = $.isNode() ? require('./sendNotify') : ''; // 这里是 node（青龙属于node环境）通知相关的
 const Notify = 1; //0为关闭通知，1为打开通知,默认为1
 const _key = 'GD_Val';
-const gdVal =
-	process.env.GD_Val ||
-	$.getdata(_key) ||
-	'';
+const gdVal = process.env.GD_Val ||$.getdata(_key);
 var md5 = require('md5');
 var message = '', node='', channel, adiu='', userId='', actID='', playID='',Cookie='',sessionid='', adcode='', bizVersion='';
-
-!(async () => {
-	if (typeof $request != 'undefined') {
-		getToken();
-		return;
-	}
-	if (gdVal) {
-		let obj = JSON.parse(gdVal);
-		userId = obj.userId;
-		Cookie = obj.Cookie;
+!(async() => {
+    if (typeof $request != "undefined") {
+        getToken();
+        return;
+    }
+    if (gdVal) {
+        let obj = JSON.parse(gdVal);
+        userId = obj.userId;
+        Cookie = obj.Cookie;
 		sessionid = obj.sessionid;
-		adiu = obj.adiu;
-		adcode = obj.adcode;
-		bizVersion = obj.bizVersion;
-	}
-	message += `----------微信小程序签到----------\n`;
-	(node = 'wechatMP'), (channel = 'h5_common'), (actID = '4zRzeQUM8eb'), (playID = '4zRA5kwg75G');
-	await checkIn();
-	await signIn();
+        adiu = obj.adiu;
+        adcode = obj.adcode;
+        bizVersion = obj.bizVersion
+    }
+    message += `----------微信小程序签到----------\n`;
+    node = 'wechatMP',
+    channel = 'h5_common',
+    actID = '4zRzeQUM8eb',
+    playID = '4zRA5kwg75G';
+    await checkIn();
+    await signIn();
 
-	message += `----------高德地图签到----------\n`;
-	(node = 'Amap'), (channel = 'h5_common'), (actID = '4yQc1Mt8nzJ'), (playID = '4yQcyzXdkYU');
-	await checkIn();
-	await signIn();
-	message += `----------支付宝小程序签到----------\n`;
-	(node = 'alipayMini'), (channel = 'alipay_mini'), (actID = '4zRAarAdbrf'), (playID = '4zRANYHwdgJ');
-	await checkIn();
-	await signIn();
+    message += `----------高德地图签到----------\n`;
+    node = 'Amap',
+    channel = 'h5_common',
+    actID = '4yQc1Mt8nzJ',
+    playID = '4yQcyzXdkYU';
+    await checkIn();
+    await signIn();
+    message += `----------支付宝小程序签到----------\n`;
+    node = 'alipayMini',
+    channel = 'alipay_mini',
+    actID = '4zRAarAdbrf',
+    playID = '4zRANYHwdgJ';
+    await checkIn();
+    await signIn();
 
-	await SendMsg(message);
+    await notify();
 })()
-	.catch(e => {
-		$.log('', `❌失败! 原因: ${e}!`, '');
-	})
-	.finally(() => {
-		$.done();
-	});
+.catch((e) => {
+    $.log("", `❌失败! 原因: ${e}!`, "");
+})
+.finally(() => {
+    $.done();
+});
 
 function getToken() {
-	if ($request && $request.method != 'OPTIONS') {
-		let abc = {};
-		let obj = JSON.parse($response.body);
-		abc.userId = obj.content.uid;
-		abc.adiu = obj.content.adiu;
-		abc.adcode = obj.content.adcode;
-		abc.bizVersion = obj.content.bizVersion;
-		abc.Cookie = $request.headers['Cookie'];
-		abc.sessionid = $request.headers['sessionid'];
-		if (abc.sessionid.length > 28 || abc.Cookie.indexOf('sessionid') != -1) {
-			let str = $.setdata(JSON.stringify(abc), _key);
-			$.msg($.name, '', '获取签到Cookie成功🎉');
+    if ($request && $request.method != 'OPTIONS') {
+        let abc = {};
+        let obj = JSON.parse($response.body)
+        abc.userId = obj.content.uid
+        abc.adiu = obj.content.adiu
+        abc.adcode = obj.content.adcode
+        abc.bizVersion = obj.content.bizVersion
+		abc.Cookie = $request.headers['Cookie']
+		abc.sessionid = $request.headers['sessionid']
+		if(abc.sessionid.length > 28 || abc.Cookie.indexOf('sessionid')!=-1){
+			let str = $.setdata(JSON.stringify(abc), _key)
+			$.msg($.name, '', '获取签到Cookie成功🎉')
 		}
-	}
+    }
 }
 
 function getKey() {
-	for (var t = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678', n = t.length, r = '', i = 0; i < 16; i++) r += t.charAt(Math.floor(Math.random() * n));
-	return r;
+    for (var t = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678', n = t.length, r = "", i = 0; i < 16; i++)
+        r += t.charAt(Math.floor(Math.random() * n));
+    return r
 }
 function getSign(channel) {
-	const sign = channel + '@oEEln6dQJK7lRfGxQjlyGthZ4loXcRHR';
-	return md5(sign).toUpperCase();
+    const sign = channel + '@oEEln6dQJK7lRfGxQjlyGthZ4loXcRHR'
+    return md5(sign).toUpperCase()
 }
-function getQuery(adiu, channel, key, sign) {
-	let xck = RSA_Public_Encrypt(key);
-	let _in = {
-		channel: channel,
-		sign: sign
-	};
-	_in = Encrypt_Body(Json2Form(_in), key);
-	let query = {
-		adiu: adiu,
-		node: 'wechatMP',
-		env: 'prod',
-		xck_channel: 'default',
-		xck: encodeURIComponent(xck),
-		in: encodeURIComponent(_in)
-	};
-	return Json2Form(query);
+function getQuery(adiu,channel, key, sign) {
+    let xck = RSA_Public_Encrypt(key);
+    let _in = {
+        "channel": channel,
+        "sign": sign
+    };
+    _in = Encrypt_Body(Json2Form(_in), key);
+    let query = {
+        "adiu": adiu,
+        "node": "wechatMP",
+        "env": "prod",
+        "xck_channel": "default",
+        "xck": encodeURIComponent(xck),
+        "in": encodeURIComponent(_in)
+    }
+    return Json2Form(query)
 }
-function getBody(body, key) {
-	return Encrypt_Body(Json2Form(body), key);
+function getBody(body,key) {
+    return Encrypt_Body(Json2Form(body), key)
 }
-function getHeaders(Cookie, sessionid) {
-	return {
-		'Content-Type': 'application/x-www-form-urlencoded',
-		'User-Agent':
-			'Mozilla/5.0 (iPhone; CPU iPhone OS 15_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 amap/12.13.1.2034 AliApp(amap/12.13.1.2034) NetType/WiFi',
-		Cookie: Cookie,
-		sessionid: sessionid
-	};
-}
-
-function getShowUrl(query) {
-	return (url = 'https://m5.amap.com/ws/car-place/show?' + query);
-}
-function getSigUrl(query) {
-	return (url = 'https://m5.amap.com/ws/alice/activity/daily_sign/do_sign?' + query);
+function getHeaders(Cookie,sessionid) {
+    return {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 amap/12.13.1.2034 AliApp(amap/12.13.1.2034) NetType/WiFi',
+        'Cookie': Cookie,
+		'sessionid': sessionid
+    }
 }
 
-function getShowBody(node, channel, adiu, userId, sign, actID, playIDs) {
-	return {
-		bizVersion: bizVersion,
-		h5version: '6.35.14',
-		platform: 'ios',
-		tid: adiu,
-		eId: '',
-		adiu: adiu,
-		diu: adiu,
-		imei: adiu,
-		idfa: adiu,
-		enterprise: '0',
-		ts: new Date().getTime(),
-		uid: userId,
-		userId: userId,
-		channel: channel,
-		dip: '20020',
-		adCode: '',
-		actID: actID,
-		playTypes: 'dailySign',
-		playIDs: playIDs,
-		node: node,
-		sign: sign
-	};
+function getShowUrl(query){
+    return url= 'https://m5.amap.com/ws/car-place/show?' + query;
+}
+function getSigUrl(query){
+    return url= 'https://m5.amap.com/ws/alice/activity/daily_sign/do_sign?' + query;
+}
+
+function getShowBody(node, channel,adiu, userId, sign, actID, playIDs) {
+    return {
+        "bizVersion": bizVersion,
+        "h5version": "6.35.14",
+        "platform": "ios",
+        "tid": adiu,
+        "eId": "",
+        "adiu": adiu,
+        "diu": adiu,
+        "imei": adiu,
+        "idfa": adiu,
+        "enterprise": "0",
+        "ts": new Date().getTime(),
+        "uid": userId,
+        "userId": userId,
+        "channel": channel,
+        "dip": "20020",
+        "adCode": "",
+        "actID": actID,
+        "playTypes": "dailySign",
+        "playIDs": playIDs,
+        "node": node,
+        "sign": sign
+    }
 }
 function getSigBody(node, channel, adiu, userId, sign, actID, playID, signTerm, signDay) {
-	return {
-		bizVersion: bizVersion,
-		h5version: '6.35.14',
-		platform: 'ios',
-		tid: adiu,
-		eId: '',
-		adiu: adiu,
-		diu: adiu,
-		imei: adiu,
-		idfa: adiu,
-		enterprise: '0',
-		ts: new Date().getTime(),
-		uid: userId,
-		userId: userId,
-		channel: channel,
-		dip: '20020',
-		actID: actID,
-		playID: playID,
-		signTerm: signTerm,
-		signType: '1',
-		signDay: signDay,
-		adCode: '',
-		node: node,
-		div: '',
-		sign: sign
-	};
+     return{
+        "bizVersion": bizVersion,
+        "h5version": "6.35.14",
+        "platform": "ios",
+        "tid": adiu,
+        "eId": "",
+        "adiu": adiu,
+        "diu": adiu,
+        "imei": adiu,
+        "idfa": adiu,
+        "enterprise": "0",
+        "ts": new Date().getTime(),
+        "uid": userId,
+        "userId": userId,
+        "channel": channel,
+        "dip": "20020",
+        "actID": actID,
+        "playID": playID,
+        "signTerm": signTerm,
+        "signType": "1",
+        "signDay": signDay,
+        "adCode": "",
+        "node": node,
+        "div": "",
+        "sign": sign
+    }
 }
+
+
 
 function checkIn() {
-	return new Promise(resove => {
-		key = getKey();
-		sign = getSign(channel);
-		query = getQuery(adiu, channel, key, sign);
-		url = getShowUrl(query);
+    return new Promise((resove) => {
+        key = getKey();
+        sign = getSign(channel);
+        query = getQuery(adiu,channel, key, sign);
+		url = getShowUrl(query)
 		body = getShowBody(node, channel, adiu, userId, sign, actID, playID);
-		body = getBody(body, key);
-		body = 'in=' + encodeURIComponent(body);
-		headers = getHeaders(Cookie, sessionid);
-		const rest = { url: url, body: body, headers: headers };
-		$.post(rest, (err, resp, data) => {
-			try {
+        body = getBody(body,key);
+        body = 'in=' + encodeURIComponent(body);
+        headers = getHeaders(Cookie,sessionid);
+        const rest = {url: url,body: body,headers: headers};
+        $.post(rest, (err, resp, data) => {
+            try {
 				var obj = JSON.parse(data);
-				if (obj?.code == '1') {
+				if(obj?.code == '1'){
 					obj.data.playMap.dailySign.signList.forEach(t => {
-						if (t.date == $.time('MM月dd日')) {
+						if(t.date == $.time('MM月dd日')){
 							signTerm11 = obj.data.playMap.dailySign.signTerm;
 							signDay11 = t.day;
-							isSign = t.isSign; //isSign = 1 为签到过，懒得管了，让它再提交一次吧
-							message += `查询:${t.date} isSign=${isSign}\n`;
+							isSign = t.isSign;//isSign = 1 为签到过，懒得管了，让它再提交一次吧
+						message += `查询:${t.date} isSign=${isSign}\n`;	
 						}
-					});
-				} else {
+					})
+				}else{
 					message += `查询:${obj?.message}\n`;
 				}
-			} catch (e) {
-				$.logErr(e, '❌查询：请重新登陆更新Token');
-			} finally {
-				resove();
-			}
-		});
-	});
+            } catch (e) {
+                $.logErr(e,"❌查询：请重新登陆更新Token");
+            } finally {
+                resove()
+            }
+        })
+    })
 }
 function signIn() {
-	return new Promise(resove => {
-		key = getKey();
-		sign = getSign(channel);
-		query = getQuery(adiu, channel, key, sign);
-		url = getSigUrl(query);
-		body = getSigBody(node, channel, adiu, userId, sign, actID, playID, signTerm11, signDay11);
-		body = getBody(body, key);
-		body = 'in=' + encodeURIComponent(body);
-		headers = getHeaders(Cookie, sessionid);
-		const rest = { url: url, body: body, headers: headers };
-		$.post(rest, (err, resp, data) => {
-			try {
+    return new Promise((resove) => {
+        key = getKey();
+        sign = getSign(channel);
+        query = getQuery(adiu,channel, key, sign);
+		url = getSigUrl(query)
+		body = getSigBody(node, channel, adiu, userId, sign, actID, playID, signTerm11, signDay11); 
+        body = getBody(body,key);
+        body = 'in=' + encodeURIComponent(body);
+        headers = getHeaders(Cookie,sessionid);
+        const rest = {url: url,body: body,headers: headers};
+        $.post(rest, (err, resp, data) => {
+            try {
 				//console.log(data)
 				var obj = JSON.parse(data);
-				if (obj?.code == '1') {
+				if(obj?.code == '1'){
 					message += `签到:签到成功\n`;
-				} else {
+				}else{
 					message += `签到:${obj?.message}\n`;
 				}
-			} catch (e) {
-				$.logErr(e, '❌请重新登陆更新Token');
-			} finally {
-				resove();
-			}
-		});
-	});
-}
-
-async function SendMsg(message) {
-	if (!message) return;
-
-	if (Notify > 0) {
-		if ($.isNode()) {
-			var notify = require('./sendNotify');
-			await notify.sendNotify($.name, message);
-		} else {
-			$.msg(message);
-		}
-	} else {
-		console.log(message);
-	}
+            } catch (e) {
+                $.logErr(e,"❌请重新登陆更新Token");
+            } finally {
+                resove()
+            }
+        })
+    })
 }
 
 //************ENV
