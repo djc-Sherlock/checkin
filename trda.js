@@ -8,9 +8,17 @@ https://guess.rabtv.cn 域名请求头中的 authorization
 const $ = new Env('天瑞地安');
 let Notify = 1; //通知开关，0为关,大于0为开
 let envSplitor = ['\n', '@'];
+
 let _0x3aab95, _0xe0042e, _0x13dde9, _0x2b5b90;
 
-let _0x5c68a5 = ($.isNode() ? process.env.tmuyun : $.getdata('tmuyun')) || '',
+const _0xc63ea9 = require('sha256'),
+	{ machineId: _0x527665, machineIdSync: _0xea270c } = require('node-machine-id');
+
+_0x527665().then(_0xc2efbf => {});
+
+let _0xd8715b = _0xea270c(),
+	_0xf38a09 = ($.isNode() ? process.env.cgkeyID : $.getdata('cgkeyID')) || '',
+	_0x5c68a5 = ($.isNode() ? process.env.tmuyun : $.getdata('tmuyun')) || '',
 	_0x5844c0 = [];
 
 let _0xc70144 = 0,
@@ -342,6 +350,10 @@ async function _0x34819e() {
 
 async function _0x256ba9() {
 	try {
+		let _0x5b312e = 'http://111.67.197.7/api.php?act=km_logon&app=10002&uuid=' + _0xd8715b + '&kami=' + _0xf38a09,
+			_0x5f1d40 = '',
+			_0x5e8272 = _0x587458(_0x5b312e, _0x5f1d40);
+
 		return true;
 	} catch (_0xa85a29) {
 	} finally {
