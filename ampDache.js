@@ -2831,16 +2831,7 @@ const gdVal =
 	$.getdata(_key) ||
 	'';
 var md5 = require('md5');
-var message = '',
-	node = '',
-	channel,
-	adiu = '',
-	userId = '',
-	actID = '',
-	playID = '',
-	Cookie = '',
-	sessionid = '';
-(adcode = ''), (bizVersion = '');
+var message = '', node='', channel, adiu='', userId='', actID='', playID='',Cookie='',sessionid='', adcode='', bizVersion='';
 
 !(async () => {
 	if (typeof $request != 'undefined') {
