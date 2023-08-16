@@ -222,7 +222,7 @@ function errorMsg(message) {
 	return new Promise(resolve => {
 		const body = {
 			token: `${PPTOKEN}`,
-			title: `海底捞小程序签到`,
+			title: `MAX+签到`,
 			content: `${message}`
 		};
 		const options = {
