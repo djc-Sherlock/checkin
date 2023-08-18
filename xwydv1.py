@@ -69,7 +69,7 @@ else:
             print(response['message'])
 
         print("============开始执行阅读文章============")
-        for i in range(15):
+        for i in range(30):
             url = "http://2477726.9o.10r8cvn6b1.cloud/read/task"
 
             response = requests.get(url, headers=headers, json=data).json()
@@ -96,14 +96,12 @@ else:
                 else:
                     print(f"{response['message']}")
                     break
-
-    print(f"============开始微信提现============")
-    url="http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
-
-    response = requests.get(url, headers=headers, json=data).json()
-    if response['code']==0:
-        print(response['message'])
-    elif response['code']==1:
-        print(response['message'])
-    else:
-        print(f"错误未知{response}")
+        print(f"============开始微信提现============")
+        url="http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
+        response = requests.get(url, headers=headers, json=data).json()
+        if response['code']==0:
+            print(response['message'])
+        elif response['code']==1:
+            print(response['message'])
+        else:
+            print(f"错误未知{response}")
