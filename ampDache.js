@@ -6,7 +6,7 @@
 自动签到 地图APP/微信小程序、支付宝小程序
 由于不懂JS，代码是硬堆的，也不知道怎么弄，好在能跑起来，有懂的大佬可以帮优化下流程
 青龙变量
-export gdVal = '{"userId":"xx","adiu":"xx","adcode":"xx","bizVersion":"xx","Cookie":"xx","sessionid":"xx"}'
+export GD_Val = '{"userId":"xx","adiu":"xx","adcode":"xx","bizVersion":"xx","Cookie":"xx","sessionid":"xx"}'
 userId、adiu、adcode、bizVersion在响应body里，抓包搜query的请求。Cookie、sessionid在请求头里
 ======调试区|忽略======
 # ^https:\/\/m5(-zb)?\.amap\.com\/ws\/yuece\/(act|openapi)\/(activity\/current\/)?query url script-response-body http://192.168.2.170:8080/ampDache.js
