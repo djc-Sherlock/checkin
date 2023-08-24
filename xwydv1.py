@@ -92,6 +92,9 @@ else:
             if response['code'] == 1:
                 print(response['message'])
                 break
+            elif response['code'] == 801:
+                print(response['message'])
+                break
             else:
                 try:
                     mid = response['data']['link'].split('&mid=')[1].split('&')[0]
