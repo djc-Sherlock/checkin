@@ -12,7 +12,7 @@ async function getBondList() {
 		const data = response.data;
 
 		data.rows.forEach(async row => {
-			if (row.cell.apply_date == '2023-08-23') {
+			if (row.cell.apply_date == today) {
 				bondList.push(row.cell.bond_nm); // 将符合条件的bond_nm加入到bondList数组中
 			}
 		});
