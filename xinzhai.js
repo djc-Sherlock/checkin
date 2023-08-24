@@ -11,24 +11,27 @@ async function getBondList() {
 		const response = await axios.get('https://www.jisilu.cn/data/cbnew/pre_list/'); // 发起请求
 		const data = response.data;
 
-		data.rows.forEach(row => {
-			if (row.cell.apply_date == today) {
+		data.rows.forEach(async row => {
+			if (row.cell.apply_date == '2023-08-23') {
 				bondList.push(row.cell.bond_nm); // 将符合条件的bond_nm加入到bondList数组中
 			}
-			else{
-				console.log('今天没有可转债需要申购'); 
-			}
 		});
-
-		console.log('总共有 ' + bondList.length + ' 只新债\n\n'); // 打印符合条件的数据数量
-		console.log('新债是: ' + bondList.join(', ')) + '\n\n'; // 打印符合条件的数据内容
-		msg = '🔔今日可申购 ' + bondList.length + ' 只新债\n\n' + '🔔' + bondList.join(', ');
-		await SendMsg(msg);
+		return bondList;
 	} catch (error) {
 		console.log(error);
+		return [];
 	}
 }
-
+async function printBondList(bondList) {
+	if (bondList.length > 0) {
+		console.log('总共有 ' + bondList.length + ' 只新债\n\n'); // 打印符合条件的数据数量
+		console.log('新债是: ' + bondList.join(', ') + '\n\n'); // 打印符合条件的数据内容
+		msg = '🔔今日可申购 ' + bondList.length + ' 只新债\n\n' + '🔔' + bondList.join(', ');
+		await SendMsg(msg);
+	} else {
+		console.log('今日无可转债需要申购');
+	}
+}
 async function SendMsg(message) {
 	if (!message) return;
 
@@ -39,4 +42,6 @@ async function SendMsg(message) {
 		return console.log('不发送消息提醒');
 	}
 }
-getBondList();
+getBondList()
+	.then(bondList => printBondList(bondList))
+	.catch(error => console.log(error));
