@@ -43,7 +43,178 @@ hostname =vip.heytea.com
 
 
 // env.js 全局
-function _0x27dc(){const _0x1a08d5=['usableScore','isNode','\x0a=============\x20用户CK有效性验证\x20=============\x0a','msg','barkKey','wait','application/json','获取签到Cookie成功🎉','7188dVwEql','round','✅目前共','✅check\x20success!','1112BdBrbG','index','ckStatus','join','notice','./sendNotify','method','3049300cHRKCh','heytea_data','5715180ptPUkL','getdata','signin','未找到CK','headers','共找到','3176236qOVTOk','1343822WAJHOm','setdata','❌未检测到ck，请添加环境变量','env','finally','indexOf','bark_key','map','getRandomTime','5904440PmXzdp','length','code','个账号','authorization','🔷账号','\x20>>\x20Start\x20work','notifyMsg','point','data','✅签到成功！获得','6zeQrbr','\x20>>\x20Start\x20check\x20CK','79540xKynoa','done','803mqChUa','1HCrnfO','token','❌账号','push','score','catch','name','check','message','https://vip.heytea.com/api/service-member/vip/task/member','OPTIONS','随机延迟','all','keys','错误获取签到Cookie失败','log','\x20>>\x20check\x20ck\x20error!'];_0x27dc=function(){return _0x1a08d5;};return _0x27dc();}const _0x258ea8=_0x4b8f;(function(_0x58e1c9,_0x4635a5){const _0xb7cbe5=_0x4b8f,_0x507c67=_0x58e1c9();while(!![]){try{const _0x24f25c=parseInt(_0xb7cbe5(0x20e))/0x1*(-parseInt(_0xb7cbe5(0x1f5))/0x2)+parseInt(_0xb7cbe5(0x227))/0x3*(-parseInt(_0xb7cbe5(0x22b))/0x4)+parseInt(_0xb7cbe5(0x1ec))/0x5+-parseInt(_0xb7cbe5(0x209))/0x6*(-parseInt(_0xb7cbe5(0x1f4))/0x7)+parseInt(_0xb7cbe5(0x1fe))/0x8+parseInt(_0xb7cbe5(0x1ee))/0x9+-parseInt(_0xb7cbe5(0x20b))/0xa*(parseInt(_0xb7cbe5(0x20d))/0xb);if(_0x24f25c===_0x4635a5)break;else _0x507c67['push'](_0x507c67['shift']());}catch(_0xc00171){_0x507c67['push'](_0x507c67['shift']());}}}(_0x27dc,0x7e79a));const $=new Env('喜茶Go'),ckName=_0x258ea8(0x1ed),Notify=0x1,notify=$['isNode']()?require(_0x258ea8(0x230)):'';function _0x4b8f(_0x562139,_0x4940a2){const _0x27dcc7=_0x27dc();return _0x4b8f=function(_0x4b8f57,_0x4f9161){_0x4b8f57=_0x4b8f57-0x1ec;let _0x3a45e3=_0x27dcc7[_0x4b8f57];return _0x3a45e3;},_0x4b8f(_0x562139,_0x4940a2);}let envSplitor=['@'],userCookie=($[_0x258ea8(0x220)]()?process[_0x258ea8(0x1f8)][ckName]:$[_0x258ea8(0x1ef)](ckName))||'',userList=[],userIdx=0x0,userCount=0x0;$[_0x258ea8(0x205)]=[],$[_0x258ea8(0x223)]=($['isNode']()?process[_0x258ea8(0x1f8)]['bark_key']:$[_0x258ea8(0x1ef)](_0x258ea8(0x1fb)))||'';async function main(){const _0x2ffddc=_0x258ea8;await getNotice(),console[_0x2ffddc(0x21d)](_0x2ffddc(0x221));let _0x54136e=[];for(let _0x21707d of userList){console['log']('🔷账号'+_0x21707d[_0x2ffddc(0x22c)]+_0x2ffddc(0x20a)),_0x54136e['push'](await _0x21707d[_0x2ffddc(0x215)]()),await $[_0x2ffddc(0x224)](_0x21707d['getRandomTime']());}await Promise[_0x2ffddc(0x21a)](_0x54136e),console[_0x2ffddc(0x21d)]('\x0a==================\x20任务\x20==================\x0a'),_0x54136e=[];for(let _0x47df2 of userList){_0x47df2[_0x2ffddc(0x22d)]?(DoubleLog(_0x2ffddc(0x203)+_0x47df2[_0x2ffddc(0x22c)]+_0x2ffddc(0x204)),console[_0x2ffddc(0x21d)](_0x2ffddc(0x219)+_0x47df2[_0x2ffddc(0x1fd)]()+'ms'),_0x54136e[_0x2ffddc(0x211)](await _0x47df2[_0x2ffddc(0x1f0)]()),await $[_0x2ffddc(0x224)](_0x47df2[_0x2ffddc(0x1fd)]()),_0x54136e[_0x2ffddc(0x211)](await _0x47df2[_0x2ffddc(0x206)]()),await $[_0x2ffddc(0x224)](_0x47df2['getRandomTime']())):$[_0x2ffddc(0x205)][_0x2ffddc(0x211)](_0x2ffddc(0x210)+_0x47df2['index']+'\x20>>\x20Check\x20ck\x20error!');}await Promise[_0x2ffddc(0x21a)](_0x54136e);}class UserInfo{constructor(_0x462c6f){const _0x14a1ec=_0x258ea8;this[_0x14a1ec(0x22c)]=++userIdx,this[_0x14a1ec(0x20f)]=_0x462c6f,this[_0x14a1ec(0x22d)]=!![],this[_0x14a1ec(0x1f2)]={'Authorization':this[_0x14a1ec(0x20f)],'Content-Type':_0x14a1ec(0x225)};}[_0x258ea8(0x1fd)](){return randomInt(0x3e8,0xbb8);}async[_0x258ea8(0x1f0)](){const _0x33a01e=_0x258ea8;try{const _0x28d068={'url':'https://vip.heytea.com/api/service-member/vip/task/award/114','headers':{'Authorization':this['token'],'Content-Type':_0x33a01e(0x225)},'body':'{}'};let _0x2a99ec=await httpRequest(_0x28d068);_0x2a99ec?.[_0x33a01e(0x200)]==0x0?DoubleLog(_0x33a01e(0x208)+_0x2a99ec?.[_0x33a01e(0x207)]?.[_0x33a01e(0x212)]+'积分'):DoubleLog('🔶'+_0x2a99ec[_0x33a01e(0x216)]);}catch(_0xc15147){console[_0x33a01e(0x21d)](_0xc15147);}}async[_0x258ea8(0x206)](){const _0x153a20=_0x258ea8;let _0x4bec83={'url':_0x153a20(0x217),'headers':this[_0x153a20(0x1f2)]},_0x4ac5dd=await httpRequest(_0x4bec83);_0x4ac5dd?.[_0x153a20(0x200)]==0x0?DoubleLog(_0x153a20(0x229)+_0x4ac5dd?.[_0x153a20(0x207)]?.[_0x153a20(0x21f)]+'积分'):console[_0x153a20(0x21d)](_0x4ac5dd[_0x153a20(0x216)]);}async['check'](){const _0x5288cd=_0x258ea8;let _0x34c3f4={'url':_0x5288cd(0x217),'headers':this[_0x5288cd(0x1f2)]},_0x54f226=await httpRequest(_0x34c3f4);_0x54f226?.[_0x5288cd(0x200)]==0x0?console['log'](_0x5288cd(0x22a)):(this['ckStatus']=![],console[_0x5288cd(0x21d)](_0x5288cd(0x210)+this[_0x5288cd(0x22c)]+_0x5288cd(0x21e)));}}async function getCookie(){const _0x4f737d=_0x258ea8;if($request&&$request[_0x4f737d(0x231)]!=_0x4f737d(0x218)){const _0x10e60d=$request[_0x4f737d(0x1f2)]['Authorization']||$request[_0x4f737d(0x1f2)][_0x4f737d(0x202)];_0x10e60d?($[_0x4f737d(0x1f6)](_0x10e60d,ckName),$[_0x4f737d(0x222)]($['name'],'',_0x4f737d(0x226))):$[_0x4f737d(0x222)]($[_0x4f737d(0x214)],'',_0x4f737d(0x21c));}}async function getNotice(){const _0x1b183e=_0x258ea8;try{const _0x5f1adb=['https://raw.githubusercontent.com/Sliverkiss/GoodNight/main/notice.json','https://raw.githubusercontent.com/Sliverkiss/GoodNight/main/tip.json'];for(const _0xae7f25 of _0x5f1adb){const _0x88b712={'url':_0xae7f25,'headers':{'User-Agent':''}},_0xb16055=await httpRequest(_0x88b712);if(_0xb16055)console[_0x1b183e(0x21d)](_0xb16055[_0x1b183e(0x22f)]);}}catch(_0x36e369){console[_0x1b183e(0x21d)](_0x36e369);}}!(async()=>{const _0x280277=_0x258ea8;if(typeof $request!='undefined'){await getCookie();return;}if(!await checkEnv())throw new Error(_0x280277(0x1f7));;userList[_0x280277(0x1ff)]>0x0&&await main();})()[_0x258ea8(0x213)](_0x3cce32=>$['notifyMsg'][_0x258ea8(0x211)](_0x3cce32[_0x258ea8(0x216)]||_0x3cce32))[_0x258ea8(0x1f9)](async()=>{const _0x2053d9=_0x258ea8;$[_0x2053d9(0x223)]&&await BarkNotify($,$[_0x2053d9(0x223)],$[_0x2053d9(0x214)],$[_0x2053d9(0x205)][_0x2053d9(0x22e)]('\x0a'));;await SendMsg($[_0x2053d9(0x205)][_0x2053d9(0x22e)]('\x0a')),$[_0x2053d9(0x20c)]();});function DoubleLog(_0x12a005){const _0x2e224f=_0x258ea8;$[_0x2e224f(0x220)]()?_0x12a005&&(console[_0x2e224f(0x21d)](''+_0x12a005),$['notifyMsg'][_0x2e224f(0x211)](''+_0x12a005)):(console['log'](''+_0x12a005),$[_0x2e224f(0x205)]['push'](''+_0x12a005));}function toParams(_0x4ab4c0){const _0x5a31f0=_0x258ea8;var _0x568be5=Object[_0x5a31f0(0x21b)](_0x4ab4c0)[_0x5a31f0(0x1fc)](function(_0x5a3c9b){return encodeURIComponent(_0x5a3c9b)+'='+encodeURIComponent(_0x4ab4c0[_0x5a3c9b]);})[_0x5a31f0(0x22e)]('&');return _0x568be5;}async function checkEnv(){const _0x28f1cc=_0x258ea8;if(userCookie){let _0x38c414=envSplitor[0x0];for(let _0x5833d3 of envSplitor)if(userCookie[_0x28f1cc(0x1fa)](_0x5833d3)>-0x1){_0x38c414=_0x5833d3;break;}for(let _0x4742ca of userCookie['split'](_0x38c414))_0x4742ca&&userList[_0x28f1cc(0x211)](new UserInfo(_0x4742ca));userCount=userList[_0x28f1cc(0x1ff)];}else{console['log'](_0x28f1cc(0x1f1));return;}return console['log'](_0x28f1cc(0x1f3)+userCount+_0x28f1cc(0x201)),!![];}function randomInt(_0x25ce06,_0x4122e7){const _0xf8b109=_0x258ea8;return Math[_0xf8b109(0x228)](Math['random']()*(_0x4122e7-_0x25ce06)+_0x25ce06);}async function SendMsg(_0x189716){const _0xfe8e9f=_0x258ea8;if(!_0x189716)return;Notify>0x0?$[_0xfe8e9f(0x220)]()?await notify['sendNotify']($[_0xfe8e9f(0x214)],_0x189716):$['msg']($[_0xfe8e9f(0x214)],'',_0x189716):console[_0xfe8e9f(0x21d)](_0x189716);}
+const $ = new Env('喜茶Go'),
+	ckName = 'heytea_data',
+	Notify = 1,
+	notify = $.isNode() ? require('./sendNotify') : '';
+let envSplitor = ['@'],
+	userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '',
+	userList = [],
+	userIdx = 0,
+	userCount = 0;
+$.notifyMsg = [];
+$.barkKey = ($.isNode() ? process.env.bark_key : $.getdata('bark_key')) || '';
+
+async function main() {
+	console.log('\n============= 用户CK有效性验证 =============\n');
+	let _0x54136e = [];
+
+	for (let _0x21707d of userList) {
+		console.log('🔷账号' + _0x21707d.index + ' >> Start check CK');
+
+		_0x54136e.push(await _0x21707d.check());
+
+		await $.wait(_0x21707d.getRandomTime());
+	}
+
+	await Promise.all(_0x54136e);
+	console.log('\n================== 任务 ==================\n');
+	_0x54136e = [];
+
+	for (let _0x47df2 of userList) {
+		_0x47df2.ckStatus
+			? (DoubleLog('🔷账号' + _0x47df2.index + ' >> Start work'),
+			  console.log('随机延迟' + _0x47df2.getRandomTime() + 'ms'),
+			  _0x54136e.push(await _0x47df2.signin()),
+			  await $.wait(_0x47df2.getRandomTime()),
+			  _0x54136e.push(await _0x47df2.point()),
+			  await $.wait(_0x47df2.getRandomTime()))
+			: $.notifyMsg.push('❌账号' + _0x47df2.index + ' >> Check ck error!');
+	}
+
+	await Promise.all(_0x54136e);
+}
+
+class UserInfo {
+	constructor(_0x462c6f) {
+		this.index = ++userIdx;
+		this.token = _0x462c6f;
+		this.ckStatus = true;
+		this.headers = {
+			Authorization: this.token,
+			'Content-Type': 'application/json'
+		};
+	}
+
+	['getRandomTime']() {
+		return randomInt(1000, 3000);
+	}
+
+	async ['signin']() {
+		try {
+			const _0x28d068 = {
+				url: 'https://vip.heytea.com/api/service-member/vip/task/award/114',
+				headers: {
+					Authorization: this.token,
+					'Content-Type': 'application/json'
+				},
+				body: '{}'
+			};
+
+			let _0x2a99ec = await httpRequest(_0x28d068);
+
+			_0x2a99ec?.['code'] == 0 ? DoubleLog('✅签到成功！获得' + _0x2a99ec?.['data']?.['score'] + '积分') : DoubleLog('🔶' + _0x2a99ec.message);
+		} catch (_0xc15147) {
+			console.log(_0xc15147);
+		}
+	}
+
+	async ['point']() {
+		let _0x4bec83 = {
+				url: 'https://vip.heytea.com/api/service-member/vip/task/member',
+				headers: this.headers
+			},
+			_0x4ac5dd = await httpRequest(_0x4bec83);
+
+		_0x4ac5dd?.['code'] == 0 ? DoubleLog('✅目前共' + _0x4ac5dd?.['data']?.['usableScore'] + '积分') : console.log(_0x4ac5dd.message);
+	}
+
+	async ['check']() {
+		let _0x34c3f4 = {
+				url: 'https://vip.heytea.com/api/service-member/vip/task/member',
+				headers: this.headers
+			},
+			_0x54f226 = await httpRequest(_0x34c3f4);
+
+		_0x54f226?.['code'] == 0 ? console.log('✅check success!') : ((this.ckStatus = false), console.log('❌账号' + this.index + ' >> check ck error!'));
+	}
+}
+
+async function getCookie() {
+	if ($request && $request.method != 'OPTIONS') {
+		const _0x10e60d = $request.headers.Authorization || $request.headers.authorization;
+
+		_0x10e60d ? ($.setdata(_0x10e60d, ckName), $.msg($.name, '', '获取签到Cookie成功🎉')) : $.msg($.name, '', '错误获取签到Cookie失败');
+	}
+}
+
+
+!(async () => {
+	if (typeof $request != 'undefined') {
+		await getCookie();
+		return;
+	}
+
+	if (!(await checkEnv())) {
+		throw new Error('❌未检测到ck，请添加环境变量');
+	}
+
+	userList.length > 0 && (await main());
+})()
+	.catch(_0x3cce32 => $.notifyMsg.push(_0x3cce32.message || _0x3cce32))
+	.finally(async () => {
+		$.barkKey && (await BarkNotify($, $.barkKey, $.name, $.notifyMsg.join('\n')));
+		await SendMsg($.notifyMsg.join('\n'));
+		$.done();
+	});
+
+function DoubleLog(_0x12a005) {
+	$.isNode() ? _0x12a005 && (console.log('' + _0x12a005), $.notifyMsg.push('' + _0x12a005)) : (console.log('' + _0x12a005), $.notifyMsg.push('' + _0x12a005));
+}
+
+function toParams(_0x4ab4c0) {
+	var _0x568be5 = Object.keys(_0x4ab4c0)
+		.map(function (_0x5a3c9b) {
+			return encodeURIComponent(_0x5a3c9b) + '=' + encodeURIComponent(_0x4ab4c0[_0x5a3c9b]);
+		})
+		.join('&');
+
+	return _0x568be5;
+}
+
+async function checkEnv() {
+	if (userCookie) {
+		let _0x38c414 = envSplitor[0];
+
+		for (let _0x5833d3 of envSplitor)
+			if (userCookie.indexOf(_0x5833d3) > -1) {
+				_0x38c414 = _0x5833d3;
+				break;
+			}
+
+		for (let _0x4742ca of userCookie.split(_0x38c414)) _0x4742ca && userList.push(new UserInfo(_0x4742ca));
+
+		userCount = userList.length;
+	} else {
+		console.log('未找到CK');
+		return;
+	}
+
+	console.log('共找到' + userCount + '个账号');
+	return true;
+}
+
+function randomInt(_0x25ce06, _0x4122e7) {
+	return Math.round(Math.random() * (_0x4122e7 - _0x25ce06) + _0x25ce06);
+}
+
+async function SendMsg(_0x189716) {
+	if (!_0x189716) {
+		return;
+	}
+
+	Notify > 0 ? ($.isNode() ? await notify.sendNotify($.name, _0x189716) : $.msg($.name, '', _0x189716)) : console.log(_0x189716);
+}
 
 /** ---------------------------------固定不动区域----------------------------------------- */
 // prettier-ignore
