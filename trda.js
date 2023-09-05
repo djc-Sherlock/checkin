@@ -17,9 +17,7 @@ _0x527665().then(_0xc2efbf => {});
 
 let _0xd8715b = _0xea270c(),
 	_0xf38a09 = ($.isNode() ? process.env.cgkeyID : $.getdata('cgkeyID')) || '',
-	_0x5c68a5 =
-		($.isNode() ? process.env.tmuyun : $.getdata('tmuyun')) ||
-		'',
+	_0x5c68a5 = ($.isNode() ? process.env.tmuyun : $.getdata('tmuyun')) || '',
 	_0x5844c0 = [];
 
 let _0xc70144 = 0,
@@ -81,7 +79,7 @@ class _0x3fac71 {
 			}
 			console.log(_0x98cbae);
 			if (_0x98cbae.code == 1) {
-				$.logAndNotify('账号[' + this.name + ']签到: 第' + _0x98cbae.data.info.continue_sign_num + '天');
+				$.logAndNotify('账号[' + this.name + ']签到: 第' + _0x98cbae.data.continue_sign_num + '天');
 			} else {
 				$.logAndNotify('账号[' + this.name + ']签到: ' + _0x98cbae.msg);
 			}
