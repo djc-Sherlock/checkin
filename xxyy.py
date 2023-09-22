@@ -7,19 +7,15 @@ export Acookie=cookie
 cron：0 8 * * *
 """
 
-
-
-
 import os
 import time
 
 import requests
+
 # from dotenv import load_dotenv
 #
 # load_dotenv()
 accounts = os.getenv("Acookie")
-response = requests.get('https://gitee.com/shallow-a/qim9898/raw/master/label.txt').text
-print(response)
 if accounts is None:
     print('你没有填入Acookie，咋运行？')
     exit()
@@ -68,13 +64,21 @@ for i, account in enumerate(accounts_list, start=1):
 
     else:
         print(f"错误{response}")
-
-
-
-
-
-
-
-
-
-
+    url = "https://x.moonbox.site/api/account/withdraw/info"
+    response = requests.get(url, headers=headers).json()
+    if response['code'] == 1:
+        canWithdrawDou = response['data']['canWithdrawDou']
+        freezeDou = response['data']['freezeDou']
+        print(f"当前可提现:{canWithdrawDou}豆子\n冻结豆子:{freezeDou}")
+        if canWithdrawDou > 192:
+            url = "https://x.moonbox.site/api/account/cash/withdraw"
+            body = {"dou": canWithdrawDou}
+            response = requests.post(url, headers=headers, json=body).json()
+            if response['code'] == 1:
+                print('提现成功')
+            else:
+                print(f"错误{response}")
+        else:
+            print(f"当前可提现豆子：{canWithdrawDou}，不满足提现条件")
+    else:
+        print(f"错误{response}")
