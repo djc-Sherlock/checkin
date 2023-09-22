@@ -1,6 +1,5 @@
 """
-@Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-小阅阅互助  入口   https://x.moonbox.site/?ytx9qKiK8410#/?recommend=HU1FIZR5BV0
+小阅阅互助  入口   https://x.moonbox.site/?73utPq6i1134=#/?recommend=HU2AT9HTVM0
 阅读文章https://x.moonbox.site/api/article/read抓出cookie    填进去直接开冲
 export Acookie=cookie
 多账号用'===='隔开 例 账号1====账号2
