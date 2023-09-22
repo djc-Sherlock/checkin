@@ -34,27 +34,22 @@ hostname =7.wawo.cc
 
 // env.js 全局
 const $ = new Env('所有女生会员服务中心');
-
+const Notify = 1; //0为关闭通知,1为打开通知,默认为1
+const notify = $.isNode() ? require('./sendNotify') : '';
 //环境变量
-const env_name = 'syns_data';
-const env = 'bearer 6262172d-26e0-4e4e-813e-25279f61f56a';
+const env = process.env.syns_data;
 
 //通知相关
 var message = '';
 
 //主程序执行入口
 !(async () => {
-	//没有设置变量,执行Cookie获取
-	if (typeof $request != 'undefined') {
-		getCookie();
-		return;
-	}
 	//开始执行日常签到
 	await signin();
 	await live();
 	await viewcust();
 	await score();
-	await notify();
+	await SendMsg(message);
 })()
 	.catch(e => {
 		$.log('', `❌失败! 原因: ${e}!`, '');
@@ -78,7 +73,6 @@ function signin() {
 			},
 			body: '{}'
 		};
-		console.log(JSON.stringify(signinRequest));
 		//post方法
 		$.post(signinRequest, async (error, response, data) => {
 			try {
@@ -210,9 +204,17 @@ function getCookie() {
 		}
 	}
 }
-//通知函数
-async function notify() {
-	$.msg($.name, '', message);
+async function SendMsg(message) {
+	if (!message) return;
+	if (Notify > 0) {
+		if ($.isNode()) {
+			await notify.sendNotify($.name, message);
+		} else {
+			$.msg($.name, '', message);
+		}
+	} else {
+		console.log(message);
+	}
 }
 
 /** ---------------------------------固定不动区域----------------------------------------- */
