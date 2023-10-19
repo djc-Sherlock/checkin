@@ -162,7 +162,9 @@ class UserInfo {
       			console.log(options);
 			//post方法
 			let result = await httpRequest(options);
-			console.log(result);
+			$.post(options,async (error, response, data) => {
+				try {
+					let result = JSON.parse(data);
 			if (result.status == 1) {
 				//obj.error是0代表完成
 				DoubleLog(`✅${result?.msg}`);
@@ -170,6 +172,14 @@ class UserInfo {
 				DoubleLog(`🔶${result?.msg}`);
 				//console.log(result);
 			}
+				} catch (e) {
+					log(e);
+				} finally {
+					resolve();
+				}
+			},
+			timeout
+		)
 		} catch (e) {
 			console.log(e);
 		}
